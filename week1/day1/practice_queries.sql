@@ -3,3 +3,7 @@
 -- Q1. Select all columns from Employee table
 SELECT *
 FROM Employee;
+
+-- Q2. Select employee names and salaries
+SELECT name, salary
+FROM Employee;
