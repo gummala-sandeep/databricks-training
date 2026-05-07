@@ -3,31 +3,41 @@
 ## ✅ Day 1 Completed
 
 ### Topics Practiced
-- Introduction to SQL
-- SELECT statements
-- WHERE clause
-- LIKE operator
-- Date-based queries
-- Aggregate functions
+- SQL Basics
+- SELECT Statements
+- WHERE Clause
+- LIKE Operator
+- Date Functions
+- Aggregate Functions
 - GROUP BY
-- HAVING clause
+- HAVING Clause
 - ORDER BY
 
 ### Practice Work
 - Created database tables using `datacreation.sql`
-- Executed SQL queries using DB Fiddle
-- Solved Day 1 SQL practice questions
-- Verified query outputs
+- Solved SQL questions from 1 to 35
+- Verified outputs using DB Fiddle
 - Uploaded practice files and screenshots to GitHub
 
-### Files Added
-- `datacreation.sql`
-- `practice_queries.sql`
-- `outputs/`
-- `README.md`
+---
 
-### Learning Outcome
-Gained practical understanding of SQL query writing, data filtering, aggregation, sorting, and grouping operations using relational database tables.
+## ✅ Day 2 Completed
+
+### Topics Practiced
+- SQL JOINS
+- INNER JOIN
+- LEFT JOIN
+- Subqueries
+- Nested Queries
+- ANY and ALL Operators
+
+### Practice Work
+- Solved SQL questions from 36 to 50
+- Practiced joins between multiple tables
+- Worked with subqueries and advanced SQL filtering
+- Verified outputs and updated repository
+
+---
 
 ## 🔄 Week 1 Status
 🟢 In Progress
