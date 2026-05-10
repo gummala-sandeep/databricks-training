@@ -1,56 +1,81 @@
--- Q36. Display employee names along with their department names
+-- Q36. Select employee names along with their department names
 SELECT e.name AS employee_name,
        d.name AS department_name
 FROM Employee e
 JOIN Department d
 ON e.department_id = d.department_id;
 
--- Q37. Display project names along with department names
+-- Q37. Select project names along with the department names they belong to
 SELECT p.name AS project_name,
        d.name AS department_name
 FROM Project p
 JOIN Department d
 ON p.department_id = d.department_id;
 
--- Q38. Display employee names along with project names
+-- Q38. Select employee names and their corresponding project names
 SELECT e.name AS employee_name,
        p.name AS project_name
 FROM Employee e
 JOIN Project p
 ON e.department_id = p.department_id;
 
--- Q39. Display all employees and their departments including employees without departments
+-- Q39. Select all employees and their departments, including those without a department
 SELECT e.name AS employee_name,
        d.name AS department_name
 FROM Employee e
 LEFT JOIN Department d
 ON e.department_id = d.department_id;
 
--- Q40. Display all departments and employees including departments without employees
+-- Q40. Select all departments and their employees, including departments without employees
 SELECT d.name AS department_name,
        e.name AS employee_name
 FROM Department d
 LEFT JOIN Employee e
 ON d.department_id = e.department_id;
 
--- Q41. Display employees who earn more than the average salary
-SELECT *
-FROM Employee
-WHERE salary > (
-    SELECT AVG(salary)
-    FROM Employee
-);
+-- Q41. Select employees who are not assigned to any project
+SELECT e.*
+FROM Employee e
+LEFT JOIN Project p
+ON e.department_id = p.department_id
+WHERE p.project_id IS NULL;
 
--- Q42. Display employees working in the same department as John
-SELECT *
+-- Q42. Select employees and the number of projects their department is working on
+SELECT e.name AS employee_name,
+       COUNT(p.project_id) AS total_projects
+FROM Employee e
+LEFT JOIN Project p
+ON e.department_id = p.department_id
+GROUP BY e.emp_id, e.name;
+
+-- Q43. Select the departments that have no employees
+SELECT d.*
+FROM Department d
+LEFT JOIN Employee e
+ON d.department_id = e.department_id
+WHERE e.emp_id IS NULL;
+
+-- Q44. Select employee names who share the same department with 'John Doe'
+SELECT name
 FROM Employee
 WHERE department_id = (
     SELECT department_id
     FROM Employee
-    WHERE name = 'John'
-);
+    WHERE name = 'John Doe'
+)
+AND name <> 'John Doe';
 
--- Q43. Display the employee with the highest salary
+-- Q45. Select the department name with the highest average salary
+SELECT d.name AS department_name,
+       AVG(e.salary) AS average_salary
+FROM Employee e
+JOIN Department d
+ON e.department_id = d.department_id
+GROUP BY d.department_id, d.name
+ORDER BY average_salary DESC
+LIMIT 1;
+
+-- Q46. Select the employee with the highest salary
 SELECT *
 FROM Employee
 WHERE salary = (
@@ -58,53 +83,15 @@ WHERE salary = (
     FROM Employee
 );
 
--- Q44. Display departments having more employees than the average department size
-SELECT department_id,
-       COUNT(*) AS employee_count
-FROM Employee
-GROUP BY department_id
-HAVING COUNT(*) > (
-    SELECT AVG(emp_count)
-    FROM (
-        SELECT COUNT(*) AS emp_count
-        FROM Employee
-        GROUP BY department_id
-    ) AS department_counts
-);
-
--- Q45. Display employees whose salary is greater than any employee in department 1
+-- Q47. Select employees whose salary is above the average salary
 SELECT *
 FROM Employee
-WHERE salary > ANY (
-    SELECT salary
+WHERE salary > (
+    SELECT AVG(salary)
     FROM Employee
-    WHERE department_id = 1
 );
 
--- Q46. Display employees whose salary is greater than all employees in department 2
-SELECT *
-FROM Employee
-WHERE salary > ALL (
-    SELECT salary
-    FROM Employee
-    WHERE department_id = 2
-);
-
--- Q47. Display employees who are not assigned to any department
-SELECT *
-FROM Employee
-WHERE department_id IS NULL;
-
--- Q48. Display departments that do not have any employees
-SELECT *
-FROM Department
-WHERE department_id NOT IN (
-    SELECT department_id
-    FROM Employee
-    WHERE department_id IS NOT NULL
-);
-
--- Q49. Display the second highest salary
+-- Q48. Select the second highest salary from the Employee table
 SELECT MAX(salary) AS second_highest_salary
 FROM Employee
 WHERE salary < (
@@ -112,7 +99,15 @@ WHERE salary < (
     FROM Employee
 );
 
--- Q50. Display employees whose salary is above the department average salary
+-- Q49. Select the department with the most employees
+SELECT department_id,
+       COUNT(*) AS employee_count
+FROM Employee
+GROUP BY department_id
+ORDER BY employee_count DESC
+LIMIT 1;
+
+-- Q50. Select employees who earn more than the average salary of their department
 SELECT e.*
 FROM Employee e
 JOIN (
