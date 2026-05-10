@@ -108,13 +108,10 @@ ORDER BY employee_count DESC
 LIMIT 1;
 
 -- Q50. Select employees who earn more than the average salary of their department
-SELECT e.*
-FROM Employee e
-JOIN (
-    SELECT department_id,
-           AVG(salary) AS avg_salary
-    FROM Employee
-    GROUP BY department_id
-) d
-ON e.department_id = d.department_id
-WHERE e.salary > d.avg_salary;
+select *
+from Employee e1
+where salary>(
+  select avg(salary)
+  from Employee e2
+  where e1.department_id=e2.department_id
+  );
